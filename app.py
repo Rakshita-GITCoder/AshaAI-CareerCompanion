@@ -55,7 +55,7 @@ class ContextManager:
     def update_context(self, session_id, topic, entities):
         if session_id not in self.sessions:
             self.sessions[session_id] = {"last_topics": [], "entities": {}}
-        self.sessions[session_id]["last_topics"].insert(0, topic)[:3]  # Keep last 3 topics
+        self.sessions[session_id]["last_topics"].insert(0, topic)[:3]  
         self.sessions[session_id]["entities"].update(entities)
         self.sessions[session_id]["last_updated"] = datetime.now()
     
@@ -68,7 +68,7 @@ class ContextManager:
 
 context_manager = ContextManager()
 
-# Initialize rate limiter
+
 limiter = Limiter(
     app=app,
     key_func=get_remote_address,
@@ -90,9 +90,9 @@ def check_for_bias(text):
     if not text or not isinstance(text, str):
         return None
 
-    # Expanded bias patterns with more examples and positive redirections
+    
     bias_patterns = {
-        # Gender role stereotypes
+        
         r"\b(women|females|girls|wives|mothers)\s+(should|must|ought to|are expected to|belong)\s+(stay|care|quit|nurture|raise|home|kitchen)\b": {
             "suggestion": "career options for professionals with caregiving responsibilities",
             "resources": ["flexible-work-arrangements", "return-to-work-programs"]
@@ -110,19 +110,17 @@ def check_for_bias(text):
             "resources": ["women-leadership", "emotional-intelligence-training"]
         },
         
-        # Age-related biases
         r"\b(too old|too young)\s+for\s+(tech|this job|this role)\b": {
             "suggestion": "age diversity success stories and skills-based hiring practices",
             "resources": ["career-change-at-any-age", "upskilling-programs"]
         },
         
-        # Appearance-related biases
         r"\b(attractive|pretty|beautiful|ugly)\s+(women|female)\s+(get|don't get)\s+(promoted|hired)\b": {
             "suggestion": "how to highlight skills and qualifications in the hiring process",
             "resources": ["interview-preparation", "salary-negotiation"]
         },
         
-        # Marriage/children biases
+
         r"\b(married|unmarried|single|divorced)\s+women\s+(should|shouldn't)\s+(work|stay home)\b": {
             "suggestion": "individual career choices and work-life balance strategies",
             "resources": ["work-life-balance", "career-planning"]
@@ -131,8 +129,7 @@ def check_for_bias(text):
             "suggestion": "successful working mothers and companies with family-friendly policies",
             "resources": ["working-mothers", "family-friendly-companies"]
         },
-        
-        # New patterns for hackathon
+
         r"\bwomen\s+(don't|can't)\s+(code|program|hack)\b": {
             "suggestion": "women pioneers in computer science and coding resources for beginners",
             "resources": ["women-in-computing-history", "learn-to-code"]
@@ -224,7 +221,7 @@ def generate_api():
         if bias_response:
             return jsonify(bias_response), 200
 
-        # Rest of your existing code...
+        
         model = ChatGoogleGenerativeAI(
             model="gemini-2.0-flash",
             temperature=0.3,
@@ -276,7 +273,7 @@ def upload_resume():
         else:
             return jsonify({"error": "Unsupported file type"}), 400
         
-        return jsonify({"text": text[:10000]})  # Return first 10k chars
+        return jsonify({"text": text[:10000]})  
         
     except Exception as e:
         logging.error(f"Resume processing error: {str(e)}")
@@ -312,13 +309,13 @@ def retrieve_documents():
         if not query:
             return jsonify({"error": "No query provided"}), 400
         
-        # Embed the query
+        
         query_embedding = embedding_model.encode([query])
         
-        # Calculate similarity
+        
         similarities = cosine_similarity(query_embedding, knowledge_embeddings)[0]
         
-        # Get top 3 most relevant documents
+        
         top_indices = np.argsort(similarities)[-3:][::-1]
         results = [knowledge_base[i] for i in top_indices]
         
