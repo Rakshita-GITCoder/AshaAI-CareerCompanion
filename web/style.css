@@ -1,4 +1,3 @@
-/* Updated color scheme */
 :root {
     --primary-color: #89C05A;
     --primary-dark: #6D9E47;
@@ -54,7 +53,7 @@
     --shadow-lg: 0 10px 20px rgba(0,0,0,0.3);
   }
   
-  /* Base Styles */
+
   * {
     box-sizing: border-box;
     margin: 0;
@@ -83,7 +82,7 @@
     overflow: hidden;
   }
   
-  /* Sidebar Styles */
+
   .sidebar {
     width: 280px;
     background-color: var(--sidebar-bg);
@@ -193,7 +192,7 @@
     transition: var(--transition);
   }
   
-  /* Counseling Button */
+  
   .counseling-btn {
     background: linear-gradient(135deg, #AD6088, #8D4A6E) !important;
     color: white !important;
@@ -201,7 +200,6 @@
     margin-top: 0.5rem;
   }
   
-  /* Feedback Button */
   .feedback-btn {
     background: linear-gradient(135deg, #AD6088, #8D4A6E) !important;
     color: white !important;
@@ -209,7 +207,6 @@
     margin-top: 0.5rem;
   }
   
-  /* Hover Effects */
   .counseling-btn:hover {
     background: linear-gradient(135deg, #8D4A6E, #6D3956) !important;
   }
@@ -284,7 +281,6 @@
     color: var(--text-secondary);
   }
   
-  /* Chat Container Styles */
   .chat-container {
     flex: 1;
     display: flex;
@@ -381,8 +377,7 @@
     max-height: calc(100vh - 250px);
     min-height: 300px;
   }
-  
-  /* Message Styles */
+
   .message {
     margin-bottom: 1rem;
     padding: 1rem 1.25rem;
@@ -510,7 +505,6 @@
     background: rgba(137, 192, 90, 0.2);
   }
   
-  /* Suggestions */
   .suggestions-container {
     margin-bottom: 1rem;
   }
@@ -542,7 +536,6 @@
     box-shadow: var(--shadow-md);
   }
   
-  /* Prompt Form */
   .prompt-form {
     margin-top: 1rem;
   }
@@ -590,8 +583,7 @@
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
   }
-  
-  /* Voice Input */
+
   #mic-btn {
     position: relative;
     background: var(--primary-light);
@@ -621,7 +613,6 @@
     }
   }
   
-  /* Modal Styles */
   .modal {
     position: fixed;
     top: 0;
@@ -697,7 +688,7 @@
     transform: rotate(90deg);
   }
   
-  /* Profile Modal */
+
   .interest-input-group {
     display: flex;
     gap: 0.75rem;
@@ -769,7 +760,6 @@
     transform: scale(1.2);
   }
   
-  /* Saved Jobs Modal */
   .saved-jobs-header {
     padding: 1rem;
     border-bottom: 1px solid var(--border-color);
@@ -876,8 +866,6 @@
   .copy-job:hover {
     background: var(--primary-light);
   }
-  
-  /* Feedback Prompt */
   .feedback-prompt {
     background-color: #819f5f !important;
     border-left: 4px solid #89C05A;
@@ -917,8 +905,7 @@
     transform: translateY(-2px);
     box-shadow: var(--shadow-sm);
   }
-  
-  /* Responsive Design */
+
   @media (max-width: 768px) {
     .app-container {
       flex-direction: column;
@@ -981,7 +968,6 @@
     }
   }
   
-  /* Animations */
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -992,7 +978,6 @@
     to { transform: translateY(0); opacity: 1; }
   }
   
-  /* Loading Message Styling */
   .loading-message {
     display: flex;
     align-items: center;
@@ -1147,7 +1132,6 @@
     color: white;
   }
   
-  /* Loading text styling */
   .loading-text {
     color: var(--text-secondary);
     font-style: italic;
@@ -1170,8 +1154,7 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
-  
-  /* Particles Background */
+
   #particles-js {
     position: fixed;
     width: 100%;
