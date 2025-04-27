@@ -11,7 +11,7 @@ Asha AI is packed with tools to help you thrive in your career:
 - **Bias Detection**: Say goodbye to biased language – Asha AI spots and redirects it!
 - **RAG Integration**: Augment responses with real-time information to provide the most up-to-date career advice.
 
-### 2. Your Resume, Upgraded
+### 2. Your Resume Analysis
 - **Upload Your Resume**: Drop your resume in PDF or DOCX format and let Asha AI analyze it.
 - **AI-Powered Feedback**: Get instant, actionable career advice based on your resume.
 - **Personalized Suggestions**: Receive tips tailored to your unique skills and experiences.
