@@ -1,4 +1,3 @@
-// Rate limiting store
 const rateLimitStore = new Map();
 
 export async function* streamGemini({
@@ -6,9 +5,9 @@ export async function* streamGemini({
     contents = [],
     sessionId = generateSessionId()
 } = {}) {
-    // Rate limiting check (5 requests per minute per session)
+    
     const now = Date.now();
-    const window = 60 * 1000; // 1 minute
+    const window = 60 * 1000; 
     const maxRequests = 10;
     
     const sessionRequests = rateLimitStore.get(sessionId) || [];
@@ -18,7 +17,6 @@ export async function* streamGemini({
         throw new Error('Rate limit exceeded. Please wait a minute before sending more requests.');
     }
     
-    // Update rate limit store
     rateLimitStore.set(sessionId, [...recentRequests, now]);
     
     const response = await fetch("/api/generate", {
@@ -77,7 +75,7 @@ export async function* streamGeminiWithRAG({
     sessionId = generateSessionId()
 } = {}) {
     try {
-        // First retrieve relevant documents
+        
         const retrievalResponse = await fetch("/api/retrieve", {
             method: "POST",
             headers: { 
@@ -89,7 +87,6 @@ export async function* streamGeminiWithRAG({
         
         const retrievedDocs = await retrievalResponse.json();
         
-        // Augment the prompt with retrieved documents
         const augmentedPrompt = {
             ...contents[0],
             parts: [
@@ -98,7 +95,6 @@ export async function* streamGeminiWithRAG({
             ]
         };
         
-        // Then proceed with normal generation
         const response = await fetch("/api/generate", {
             method: "POST",
             headers: { 
@@ -114,7 +110,6 @@ export async function* streamGeminiWithRAG({
         yield* streamResponseChunks(response);
     } catch (error) {
         console.error("RAG error:", error);
-        // Fall back to regular generation if RAG fails
         yield* streamGemini({ model, contents, sessionId });
     }
 }
