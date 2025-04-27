@@ -1,6 +1,5 @@
 import { streamGemini } from './gemini-api.js';
 
-// DOM Elements
 const form = document.querySelector('form');
 const promptInput = document.querySelector('input[name="prompt"]');
 const chatHistory = document.querySelector('.chat-history');
@@ -26,7 +25,6 @@ const showMentorshipBtn = document.getElementById('showMentorshipBtn');
 const COUNSELING_FORM_URL = "https://docs.google.com/forms/d/1QOs6vYM4ILpsW8Qpr3RuTvDnxK1ZlKHTro-wRbmVLaw/edit";
 const FEEDBACK_FORM_URL = "https://forms.gle/wzwNPeUg7h4znVRQ8";
 
-// Sample Questions
 const sampleQuestions = [
   "How to re-enter workforce after career break?",
   "Find remote jobs in marketing",
@@ -34,13 +32,11 @@ const sampleQuestions = [
   "Flexible work options for mothers"
 ];
 
-// Track conversation flow
 let currentContext = {
   sessionId: `session_${Date.now()}`,
   lastTopics: []
 };
 
-// Initialize Markdown renderer
 const md = window.markdownit({
   breaks: true,
   linkify: true,
@@ -49,7 +45,6 @@ const md = window.markdownit({
   }
 });
 
-// Initialize profile if not exists
 if (!localStorage.getItem('careerProfile')) {
   localStorage.setItem('careerProfile', JSON.stringify({
     interests: [],
@@ -57,11 +52,7 @@ if (!localStorage.getItem('careerProfile')) {
   }));
 }
 
-// ======================
-// 1. UI Initialization
-// ======================
 function initializeUI() {
-  // Initialize particles.js background
   particlesJS('particles-js', {
     particles: {
       number: { value: 30, density: { enable: true, value_area: 800 } },
@@ -81,7 +72,6 @@ function initializeUI() {
     }
   });
 
-  // Set initial theme
   const savedTheme = localStorage.getItem('themePreference');
   if (savedTheme) {
     setTheme(savedTheme === 'dark');
@@ -89,13 +79,11 @@ function initializeUI() {
     setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
   }
 
-  // Initialize UI components
   suggestionsContainer.innerHTML = '';
   initializeSuggestions();
   addCounselingButton();
   addFeedbackButton();
 
-  // Add welcome message
   setTimeout(() => {
     addMessageToUI('asha', `Hi there! I'm Asha, your career companion. How can I help you today? Here are some things you can ask me about:
     
@@ -113,7 +101,6 @@ function initializeSuggestions() {
     btn.textContent = q;
     btn.className = 'suggestion-btn';
     
-    // Apply consistent color scheme
     btn.style.backgroundColor = '#89C05A';
     btn.style.color = 'white';
     btn.style.border = 'none';
@@ -154,9 +141,6 @@ function addFeedbackButton() {
   document.querySelector('.quick-actions').appendChild(feedbackBtn);
 }
 
-// ======================
-// 2. Theme Toggle
-// ======================
 function setTheme(isDark) {
   document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
   localStorage.setItem('themePreference', isDark ? 'dark' : 'light');
@@ -175,9 +159,6 @@ themeToggle.addEventListener('click', () => {
   });
 });
 
-// ======================
-// 3. Profile Management
-// ======================
 viewProfileBtn.addEventListener('click', () => {
   updateProfileDisplay();
   showModal(profileModal);
@@ -201,7 +182,6 @@ saveInterestBtn.addEventListener('click', () => {
       updateProfileDisplay();
       interestInput.value = '';
       
-      // Add success animation
       anime({
         targets: saveInterestBtn,
         scale: [1, 1.2, 1],
@@ -273,7 +253,6 @@ function updateProfileDisplay() {
       : '<p>No interests added yet</p>'}
   `;
 
-  // Add delete handlers
   document.querySelectorAll('.delete-interest').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const index = parseInt(e.target.closest('button').getAttribute('data-index'));
@@ -314,7 +293,6 @@ function showSavedJobsModal(jobs) {
     </div>
   `;
 
-  // Add event listeners for remove buttons
   savedJobsList.querySelectorAll('.remove-job').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = e.target.closest('button').getAttribute('data-id');
@@ -326,7 +304,6 @@ function showSavedJobsModal(jobs) {
     });
   });
 
-  // Add event listeners for copy buttons
   savedJobsList.querySelectorAll('.copy-job').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const content = decodeURIComponent(e.target.getAttribute('data-content'));
@@ -343,9 +320,6 @@ function showSavedJobsModal(jobs) {
   showModal(savedJobsModal);
 }
 
-// ======================
-// 4. Message Saving Functionality
-// ======================
 function saveJob(content, type) {
   const profile = JSON.parse(localStorage.getItem('careerProfile'));
   const jobId = 'job_' + Date.now();
@@ -364,8 +338,7 @@ function saveJob(content, type) {
   localStorage.setItem('careerProfile', JSON.stringify(profile));
   showConfetti();
   showNotification('Successfully saved!', 'success');
-  
-  // Show feedback prompt after saving
+
   setTimeout(() => {
     const feedbackDiv = document.createElement('div');
     feedbackDiv.className = 'message asha feedback-prompt';
@@ -410,7 +383,6 @@ function addActionButtonsToMessage(messageDiv, fullResponse) {
   const actionsDiv = document.createElement('div');
   actionsDiv.className = 'message-actions';
   
-  // Copy button
   const copyBtn = document.createElement('button');
   copyBtn.innerHTML = '<i class="far fa-copy"></i> Copy';
   copyBtn.onclick = () => {
@@ -426,7 +398,6 @@ function addActionButtonsToMessage(messageDiv, fullResponse) {
   };
   actionsDiv.appendChild(copyBtn);
   
-  // Save Message button
   const saveBtn = document.createElement('button');
   saveBtn.className = 'save-job-btn';
   saveBtn.innerHTML = '<i class="far fa-bookmark"></i> Save';
@@ -444,9 +415,6 @@ function addActionButtonsToMessage(messageDiv, fullResponse) {
   messageDiv.appendChild(actionsDiv);
 }
 
-// ======================
-// 5. File Upload
-// ======================
 resumeUpload.addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -454,7 +422,6 @@ resumeUpload.addEventListener('change', async (e) => {
   fileNameDisplay.textContent = file.name;
   
   try {
-    // Create message container with proper styling
     const tempMessageDiv = document.createElement('div');
     tempMessageDiv.className = 'message asha';
     const tempContentDiv = document.createElement('div');
@@ -463,17 +430,14 @@ resumeUpload.addEventListener('change', async (e) => {
     chatHistory.appendChild(tempMessageDiv);
     chatHistory.scrollTop = chatHistory.scrollHeight;
 
-    // Add loading state
     const loadingText = document.createElement('div');
     loadingText.className = 'loading-text';
     loadingText.textContent = 'Analyzing your resume...';
     tempContentDiv.appendChild(loadingText);
 
-    // Create FormData to send the file
     const formData = new FormData();
     formData.append('file', file);
 
-    // Send the file to the backend
     const response = await fetch('/api/upload-resume', {
       method: 'POST',
       body: formData
@@ -486,10 +450,8 @@ resumeUpload.addEventListener('change', async (e) => {
     const result = await response.json();
     const resumeText = result.text;
 
-    // Remove loading text when response starts
     tempContentDiv.removeChild(loadingText);
 
-    // Now analyze the resume text with Gemini
     const stream = streamGemini({
       contents: `Please analyze this resume and provide career suggestions:\n\n${resumeText}`,
       sessionId: currentSessionId
@@ -502,7 +464,6 @@ resumeUpload.addEventListener('change', async (e) => {
       chatHistory.scrollTop = chatHistory.scrollHeight;
     }
 
-    // Add action buttons
     addActionButtonsToMessage(tempMessageDiv, fullResponse);
     fileNameDisplay.textContent = '';
     
@@ -511,9 +472,7 @@ resumeUpload.addEventListener('change', async (e) => {
     fileNameDisplay.textContent = '';
   }
 });
-// ======================
-// 6. Voice Input
-// ======================
+
 if ('webkitSpeechRecognition' in window) {
   const recognition = new webkitSpeechRecognition();
   recognition.lang = 'en-US';
@@ -552,9 +511,6 @@ if ('webkitSpeechRecognition' in window) {
   micBtn.style.display = 'none';
 }
 
-// ======================
-// 7. Core Chat Functionality
-// ======================
 let currentSessionId = null;
 let isStreaming = false;
 
@@ -563,17 +519,14 @@ form.onsubmit = async (ev) => {
   const userMessage = promptInput.value.trim();
   if (!userMessage || isStreaming) return;
 
-  // Initialize session
   if (!currentSessionId) {
     currentSessionId = 'session_' + Date.now();
   }
 
-  // Add user message to UI
   addMessageToUI('user', userMessage);
   promptInput.value = '';
   isStreaming = true;
   
-  // Create and add a temporary assistant message container
   const tempMessageDiv = document.createElement('div');
   tempMessageDiv.className = 'message asha';
   const tempContentDiv = document.createElement('div');
@@ -587,7 +540,6 @@ form.onsubmit = async (ev) => {
   chatHistory.scrollTop = chatHistory.scrollHeight;
 
   try {
-    // Handle profile-related commands
     if (userMessage.match(/update my interest to|add interest|change interest/i)) {
       const interest = userMessage.replace(/.*(update my interest to|add interest|change interest)/i, '').trim();
       if (interest) {
@@ -640,10 +592,7 @@ form.onsubmit = async (ev) => {
       chatHistory.scrollTop = chatHistory.scrollHeight;
     }
 
-    // Finalize the message
     tempMessageDiv.classList.remove('streaming');
-    
-    // Add action buttons
     addActionButtonsToMessage(tempMessageDiv, fullResponse);
 
   } catch (error) {
@@ -654,15 +603,11 @@ form.onsubmit = async (ev) => {
   }
 };
 
-// ======================
-// 8. Helper Functions
-// ======================
 function addMessageToUI(sender, text) {
   const messageDiv = document.createElement('div');
   messageDiv.className = `message ${sender}`;
   messageDiv.innerHTML = md.render(text);
   
-  // Add 3D tilt effect on hover
   messageDiv.addEventListener('mousemove', (e) => {
     const x = e.clientX - messageDiv.getBoundingClientRect().left;
     const y = e.clientY - messageDiv.getBoundingClientRect().top;
@@ -681,7 +626,6 @@ function addMessageToUI(sender, text) {
   
   chatHistory.appendChild(messageDiv);
   
-  // Enhanced entry animation
   anime({
     targets: messageDiv,
     translateY: [20, 0],
@@ -735,7 +679,6 @@ function handleError(error) {
   `;
   chatHistory.appendChild(errorDiv);
   
-  // Add retry functionality
   errorDiv.querySelector('.retry-btn').addEventListener('click', () => {
     location.reload();
   });
@@ -744,11 +687,9 @@ function handleError(error) {
   showNotification(error.message, 'error');
 }
 
-// Clear chat functionality
 newChatBtn.onclick = () => {
   if (chatHistory.children.length <= 1) return;
   
-  // Confirmation dialog
   const confirmDiv = document.createElement('div');
   confirmDiv.className = 'message asha confirmation';
   confirmDiv.innerHTML = `
@@ -761,7 +702,7 @@ newChatBtn.onclick = () => {
   chatHistory.appendChild(confirmDiv);
   
   confirmDiv.querySelector('.confirm-btn').addEventListener('click', () => {
-    // Animate chat history out before clearing
+
     anime({
       targets: chatHistory.children,
       opacity: 0,
@@ -774,7 +715,6 @@ newChatBtn.onclick = () => {
         fileNameDisplay.textContent = '';
         resumeUpload.value = '';
         
-        // Add welcome message back
         setTimeout(() => {
           addMessageToUI('asha', "Let's start fresh! What would you like to discuss today?");
         }, 300);
@@ -787,12 +727,8 @@ newChatBtn.onclick = () => {
   });
 };
 
-// ======================
-// 9. Events & Programs
-// ======================
 async function fetchEvents() {
   try {
-    // Show loading state
     const loadingMsg = document.createElement('div');
     loadingMsg.className = 'message asha';
     const loadingContent = document.createElement('div');
@@ -811,8 +747,7 @@ async function fetchEvents() {
       addMessageToUI('asha', "No upcoming events currently available. Check back later!");
       return;
     }
-
-    // Create events container with proper styling
+    
     const eventsContainer = document.createElement('div');
     eventsContainer.className = 'message asha';
     const eventsContent = document.createElement('div');
@@ -853,7 +788,6 @@ async function fetchEvents() {
     eventsContainer.appendChild(eventsContent);
     chatHistory.replaceChild(eventsContainer, loadingMsg);
     
-    // Add save event handlers
     eventsContainer.querySelectorAll('.save-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const content = decodeURIComponent(e.target.getAttribute('data-content'));
@@ -877,7 +811,6 @@ async function fetchEvents() {
 
 async function fetchMentorshipPrograms() {
   try {
-    // Show loading state
     const loadingMsg = document.createElement('div');
     loadingMsg.className = 'message asha';
     const loadingContent = document.createElement('div');
@@ -897,7 +830,6 @@ async function fetchMentorshipPrograms() {
       return;
     }
 
-    // Create programs container with proper styling
     const programsContainer = document.createElement('div');
     programsContainer.className = 'message asha';
     const programsContent = document.createElement('div');
@@ -938,7 +870,6 @@ async function fetchMentorshipPrograms() {
     programsContainer.appendChild(programsContent);
     chatHistory.replaceChild(programsContainer, loadingMsg);
     
-    // Add save program handlers
     programsContainer.querySelectorAll('.save-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const content = decodeURIComponent(e.target.getAttribute('data-content'));
@@ -959,22 +890,14 @@ async function fetchMentorshipPrograms() {
     if (loadingMsg) chatHistory.removeChild(loadingMsg);
   }
 }
-// ======================
-// 10. Initialize App
-// ======================
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Clear any existing file input
   resumeUpload.value = '';
   fileNameDisplay.textContent = '';
-  
-  // Initialize UI
   initializeUI();
-  
-  // Add event listeners for the quick action buttons
   showEventsBtn.addEventListener('click', fetchEvents);
   showMentorshipBtn.addEventListener('click', fetchMentorshipPrograms);
-
-  // Add animation to quick action buttons on hover
+  
   document.querySelectorAll('.quick-action-btn').forEach(btn => {
     btn.addEventListener('mouseenter', () => {
       anime({
@@ -994,7 +917,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Add animation to form submit button
   document.querySelector('.prompt-form button[type="submit"]').addEventListener('mouseenter', () => {
     anime({
       targets: '.prompt-form button[type="submit"]',
@@ -1012,12 +934,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Initialize animations
   animateElements();
 });
 
 function animateElements() {
-  // Animate sidebar items sequentially
   anime({
     targets: '.sidebar > *',
     translateY: [20, 0],
@@ -1027,7 +947,6 @@ function animateElements() {
     easing: 'easeOutElastic'
   });
 
-  // Floating header animation
   anime({
     targets: 'header',
     translateY: [-30, 0],
@@ -1036,7 +955,6 @@ function animateElements() {
     easing: 'easeOutExpo'
   });
 
-  // Pulse effect on suggestions
   setInterval(() => {
     anime({
       targets: '.suggestions button',
