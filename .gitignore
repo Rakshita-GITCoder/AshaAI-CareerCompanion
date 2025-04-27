@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.env
+*.venv
+venv/
+.env
+
+# Node/JS
+node_modules/
+npm-debug.log*
+
+# System
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Large files
+knowledge_embeddings.npy
+*.pdf
+*.docx

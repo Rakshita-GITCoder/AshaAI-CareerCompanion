@@ -1,0 +1,16 @@
+[
+    {
+        "id": "mentor1",
+        "title": "Tech Leadership Mentorship",
+        "description": "6-month program pairing women with senior tech leaders for career guidance.",
+        "duration": "6 months",
+        "application_deadline": "2025-05-15"
+    },
+    {
+        "id": "mentor2",
+        "title": "Entrepreneurship Guidance",
+        "description": "For women looking to start their own business with mentor support.",
+        "duration": "3 months",
+        "application_deadline": "2025-06-01"
+    }
+]

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asha AI - Career Companion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💼</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Asha AI</h2>
+                <p>Your Career Companion</p>
+            </div>
+            
+            <button class="new-chat-btn" id="newChatBtn">
+                <i class="fas fa-plus"></i> New Chat
+            </button>
+            
+            <div class="quick-actions">
+                <button class="quick-action-btn" id="showEventsBtn">
+                    <i class="far fa-calendar-alt"></i> Events
+                </button>
+                <button class="quick-action-btn" id="showMentorshipBtn">
+                    <i class="fas fa-hands-helping"></i> Mentorship
+                </button>
+                <!-- Buttons added dynamically -->
+            </div>
+            
+            <div class="profile-section">
+                <button class="profile-btn" id="viewProfileBtn">
+                    <i class="far fa-user"></i> My Profile
+                </button>
+                <button class="profile-btn" id="savedJobsBtn">
+                    <i class="far fa-bookmark"></i> Saved Items
+                </button>
+            </div>
+            
+            <div class="theme-toggle-container">
+                <div class="theme-toggle" id="themeToggle">
+                    <div class="toggle-handle"></div>
+                </div>
+                <span id="themeLabel">Dark Mode</span>
+            </div>
+        </div>
+        
+        <div id="particles-js"></div>
+
+        <main class="chat-container">
+            <header>
+                <div class="header-content">
+                    <h1>Asha AI <span>Career Companion</span></h1>
+                    <p class="subtitle">Ask about jobs, mentorship, or career advice</p>
+                </div>
+                <div class="header-actions">
+                    <div class="file-upload">
+                      <label class="file-upload-label" for="resumeUpload">
+                        <i class="fas fa-file-upload"></i>
+                        Upload Resume
+                        <input type="file" id="resumeUpload" accept=".pdf,.doc,.docx" style="display:none;">
+                      </label>
+                      <span class="file-name" id="fileName"></span>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="chat-history" id="chatHistory"></div>
+            
+            <div class="suggestions-container">
+                <div class="suggestions" id="suggestions"></div>
+            </div>
+            
+            <form class="prompt-form">
+                <div class="input-group">
+                    <input 
+                        name="prompt" 
+                        placeholder="E.g. 'What tech jobs suit a 2-year career break?'" 
+                        type="text"
+                        autocomplete="off"
+                        aria-label="Ask Asha a question"
+                    >
+                    <button id="mic-btn" type="button" aria-label="Voice input"><i class="fas fa-microphone"></i></button>
+                    <button type="submit" aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- Modals remain unchanged -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Your Career Profile</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="profileInfo"></div>
+                <div class="interest-input-group">
+                    <input type="text" id="interestInput" placeholder="Add interest (e.g. Cybersecurity)" aria-label="Add career interest">
+                    <button id="saveInterestBtn"><i class="fas fa-plus"></i> Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="savedJobsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Your Saved Items</h3>
+                <span class="close-saved-jobs">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="savedJobsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/markdown-it@8.4.2/dist/markdown-it.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script type="module" src="/main.js"></script>
+</body>
+</html>

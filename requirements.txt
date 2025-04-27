@@ -1,0 +1,12 @@
+flask==3.0.2
+flask-limiter==3.5.0
+python-dotenv==1.0.1
+langchain-core==0.1.0
+langchain-google-genai==0.0.11
+PyPDF2==3.0.1
+python-docx==0.8.11
+sentence-transformers==2.6.1
+scikit-learn==1.4.1.post1
+numpy==1.26.4
+gunicorn==21.2.0
+google-generativeai==0.3.2

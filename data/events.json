@@ -1,0 +1,18 @@
+[
+    {
+        "id": "event1",
+        "title": "Women in Tech Conference 2025",
+        "description": "Annual conference for women in technology fields featuring keynote speakers and workshops.",
+        "date": "2025-05-20",
+        "location": "Bangalore",
+        "url": "https://jobsforherfoundation.org/"
+    },
+    {
+        "id": "event2",
+        "title": "Career Returners Workshop",
+        "description": "Special workshop for women returning to workforce after a career break.",
+        "date": "2025-06-05",
+        "location": "Online",
+        "url": "https://jobsforherfoundation.org/"
+    }
+]
