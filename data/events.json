@@ -1,18 +1,18 @@
 [
     {
         "id": "event1",
-        "title": "Women in Tech Conference 2025",
-        "description": "Annual conference for women in technology fields featuring keynote speakers and workshops.",
-        "date": "2025-05-20",
-        "location": "Bangalore",
-        "url": "https://jobsforherfoundation.org/"
+        "title": "Back to Work - RestartHer with MS office",
+        "description": "Empowering women to relaunch their careers after a break with expert-led training, MS Office skills, and career readiness tools — all for just ₹1!",
+        "date": "2025-04-16",
+        "location": "Online",
+        "url": "https://events.herkey.com/events/back-to-work-restarther-with-ms-office/1476"
     },
     {
         "id": "event2",
-        "title": "Career Returners Workshop",
-        "description": "Special workshop for women returning to workforce after a career break.",
-        "date": "2025-06-05",
-        "location": "Online",
-        "url": "https://jobsforherfoundation.org/"
+        "title": "HerFreshStart: Scholarships of up to 75% for Mothers Returning to Work",
+        "description": "This Mother’s Day, empower your comeback — get up to 75% scholarship on top tech programs from Great Learning, exclusively for mothers restarting their careers.",
+        "date": "2025-05-08",
+        "location": "Offline",
+        "url": "https://events.herkey.com/events/herfreshstart-scholarships-of-up-to-75-for-mothers-returning-to-work/1670"
     }
 ]
